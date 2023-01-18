@@ -6,19 +6,15 @@ public class Trie implements ITrie {
 
     private Node root;
 
-
     private int wordCount;
     private int nodeCount;
-
-//    public Trie(){
-//        root = new Node;
-//    }
-
 
     @Override
     public void add(String word) {
 
-        for (int i = 0; i < )
+        for (int i = 0; i < 26; i++){
+            
+        }
 
 
     }

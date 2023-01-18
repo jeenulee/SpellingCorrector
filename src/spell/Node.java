@@ -1,16 +1,15 @@
 package spell;
+import java.util.Arrays;
 
 public class Node implements INode {
 
     private int count;
 
-    int myArray[] = new int[26];
+    INode myArray[] = new Node[26];
 
 
     @Override
     public int getValue() {
-
-        count = myArray.length;
 
         return count;
     }
@@ -23,9 +22,7 @@ public class Node implements INode {
     @Override
     public INode[] getChildren() {
 
-        int newArray[] = myArray;
-
-        return newArray;
+    return myArray;
         //return entire array
     }
 }
