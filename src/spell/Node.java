@@ -5,7 +5,7 @@ public class Node implements INode {
 
     private int count;
 
-    INode myArray[] = new Node[26];
+    private INode myArray[] = new Node[26];
 
 
     @Override

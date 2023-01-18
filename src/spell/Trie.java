@@ -5,43 +5,75 @@ package spell;
 public class Trie implements ITrie {
 
     private Node root;
-
     private int wordCount;
     private int nodeCount;
 
     @Override
     public void add(String word) {
 
-        for (int i = 0; i < 26; i++){
-            
+        INode currNode = root;
+
+        for (int i = 0; i < word.length(); i++) {
+            char yeet = word.charAt(i);
+            int index = yeet - 'a';
+
+            if (currNode.getChildren()[index] == null) {
+                currNode.getChildren()[index] = new Node();
+            }
+            currNode = currNode.getChildren()[index];
         }
 
-
+        wordCount++;
     }
 
     @Override
     public INode find(String word) {
 
-        return null;
+        INode currNode = root;
+
+        for (int i = 0; i < word.length(); i++) {
+            char yeet = word.charAt(i);
+            int index = yeet - 'a';
+
+            if (currNode.getChildren()[index] == null) {
+                return null;
+            }
+            currNode = currNode.getChildren()[index];
+            //do I increment value here???? from node class???
+        }
+        nodeCount++;
+
+        return currNode;
+
     }
 
     @Override
     public int getWordCount() {
 
+//        for (int i = 0; i < wordCount; i++){
+//            if(wordCount != 1){
+//                return
+//            }
+//        }
         //any node that has counter != 1
         //return the count
 
-        return 0;
+        return wordCount;
     }
 
     @Override
     public int getNodeCount() {
 
-        return 0;
+        return nodeCount;
     }
+
+
+
 
     @Override
     public String toString(){
+
+        INode TrieNode =
 
         StringBuilder curWord = new StringBuilder();
         StringBuilder output = new StringBuilder();
@@ -49,7 +81,6 @@ public class Trie implements ITrie {
         toString_Helper(root, curWord, output);
 
         return output.toString();
-
 
     }
 
@@ -73,7 +104,7 @@ public class Trie implements ITrie {
 
                 toString_Helper(child, curWord, output);
 
-                curWord.deleteCharAt(curWord.size() - 1);    // may not work?
+                curWord.deleteCharAt(curWord.length() - 1);    // may not work? switched .length, used to be .size?
             }
         }
     }
