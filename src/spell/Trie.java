@@ -1,17 +1,20 @@
 package spell;
+import java.lang.String;
 
 
 //Dictionary
 public class Trie implements ITrie {
 
-    private Node root;
+    private Node root = new Node();
     private int wordCount;
     private int nodeCount;
 
     @Override
     public void add(String word) {
 
-        INode currNode = root;
+        Node currNode = root;
+        //make lowercase
+        word.toLowerCase();
 
         for (int i = 0; i < word.length(); i++) {
             char yeet = word.charAt(i);
@@ -19,17 +22,19 @@ public class Trie implements ITrie {
 
             if (currNode.getChildren()[index] == null) {
                 currNode.getChildren()[index] = new Node();
+                nodeCount ++;
             }
-            currNode = currNode.getChildren()[index];
+            currNode = (Node) currNode.getChildren()[index];
         }
-
         wordCount++;
     }
 
     @Override
+    //changed from INode
     public INode find(String word) {
 
-        INode currNode = root;
+        Node currNode = root;
+        word.toLowerCase();
 
         for (int i = 0; i < word.length(); i++) {
             char yeet = word.charAt(i);
@@ -38,25 +43,19 @@ public class Trie implements ITrie {
             if (currNode.getChildren()[index] == null) {
                 return null;
             }
-            currNode = currNode.getChildren()[index];
-            //do I increment value here???? from node class???
+            currNode = (Node) currNode.getChildren()[index];
+
         }
-        nodeCount++;
+        if(currNode.getValue() == 0 || currNode == null){
+            return null;
+        }
+
 
         return currNode;
-
     }
 
     @Override
     public int getWordCount() {
-
-//        for (int i = 0; i < wordCount; i++){
-//            if(wordCount != 1){
-//                return
-//            }
-//        }
-        //any node that has counter != 1
-        //return the count
 
         return wordCount;
     }
@@ -67,13 +66,8 @@ public class Trie implements ITrie {
         return nodeCount;
     }
 
-
-
-
     @Override
-    public String toString(){
-
-        INode TrieNode =
+    public String toString() {
 
         StringBuilder curWord = new StringBuilder();
         StringBuilder output = new StringBuilder();
@@ -84,63 +78,96 @@ public class Trie implements ITrie {
 
     }
 
-    //Trienode should probably be node or inode pretty sure?
-    private void toString_Helper(TrieNode n, StringBuilder curWord,StringBuilder output){    //need to implement trienode somewhere, have to pass in word
-                                                                    //string builder ^^ is for
-        if(n.getValue() > 0){
-            //append the node's word to the output
 
+    private void toString_Helper(Node n, StringBuilder curWord, StringBuilder output) {
+
+        if (n.getValue() > 0) {
+            //append the node's word to the output
             output.append(curWord.toString());
             output.append("\n");
         }
 
-        for (int i = 0; i < children.length; ++i){     //children.length should be 26 or length of the tree
-            INode child = n.getChildren()[i];          //recurse over all non-null children
-            if (child != null){
+        for (int i = 0; i < 26; ++i) {     //children.length should be 26 or length of the tree
+            Node child = (Node) n.getChildren()[i];          //recurse over all non-null children
+            if (child != null) {
 
-                char childLetter = (char)('a' + i);
+                char childLetter = (char) ('a' + i);
                 curWord.append(childLetter);
 
-
-                toString_Helper(child, curWord, output);
+                toString_Helper(child, curWord, output);  //change child to root?!?!?!
 
                 curWord.deleteCharAt(curWord.length() - 1);    // may not work? switched .length, used to be .size?
             }
         }
     }
 
-
-
-
     @Override
-    public int hashCode(){
+    public int hashCode() {
+        int index = 0;
 
-
+        for (int i = 0; i < root.getValue(); i++) {
+            if (root.getChildren() != null) {
+                index++;
+            }
+        }
         //Combine the following values
+
         //1. wordCount
         //2. nodeCount
         //3. The index of each of the root node's non-null children
 
-        return wordCount * nodeCount;
+
+        return index + wordCount + nodeCount; // SHOULD PROBABLY FIX -- high probs not correct
     }
 
 
     @Override
     public boolean equals(Object o) {
 
-        //check if o == null?
-        //is o == this?
-        //do this and o have the same class?
-        //if answer is no return false, if yes keep going
-        //
-
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
         Trie dictionary = (Trie) o;
 
-        //do this and ^dictionary^ have the same wordcount and nodecount???
-    return true;  //fixmelater
-//        return equals_Helper(this.root, dictionary.root);
+        if (dictionary.wordCount != this.wordCount) {
+            return false;
+        }
+        if (dictionary.nodeCount != this.nodeCount) {
+            return false;
+        }
+        return equals_Helper(this.root, dictionary.root);
+
     }
-        private boolean equals_Helper(TrieNode n1, TrieNode n2){
+
+    private boolean equals_Helper(Node n1, Node n2) {
+
+        if (n1 != null) {
+            if (n2 == null) {
+                return false;
+            }
+        }
+        if (n1 == null) {
+            if (n2 != null) {
+                return false;
+            }
+        } else if (n1 != null && n2 != null) {
+            if (n1.getValue() != n2.getValue()) {
+                return false;
+            }
+
+            for (int i = 0; i < n1.getChildren().length; i++) {
+                if (!equals_Helper((Node) n1.getChildren()[i], (Node) n2.getChildren()[i])) {
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
+}
 
             //compare n1 and n2 to see if they are the same
                 //Do n1 and n2 have the same count? If not they rae not equal, return false
@@ -149,11 +176,5 @@ public class Trie implements ITrie {
             //recurse on the children and compare the child subtrees
 
 
-        return true;
 
 
-
-
-        //not sure that should return true?
-    }
-}

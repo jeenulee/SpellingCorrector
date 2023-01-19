@@ -24,7 +24,7 @@ public class SpellCorrector implements ISpellCorrector {
 
                 //add to trie structure (dictionary)
                 //how do i load into a trie?
-                trie.append(fileContentBuilder);
+//               trie.append(fileContentBuilder);
 
                 fileContentBuilder.append(System.lineSeparator());
             }
@@ -48,3 +48,4 @@ public class SpellCorrector implements ISpellCorrector {
         return null;
     }
 }
+

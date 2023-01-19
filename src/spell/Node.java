@@ -4,9 +4,7 @@ import java.util.Arrays;
 public class Node implements INode {
 
     private int count;
-
-    private INode myArray[] = new Node[26];
-
+    private Node myArray[] = new Node[26];
 
     @Override
     public int getValue() {
@@ -16,6 +14,7 @@ public class Node implements INode {
 
     @Override
     public void incrementValue() {
+
         count ++;
     }
 
@@ -23,6 +22,5 @@ public class Node implements INode {
     public INode[] getChildren() {
 
     return myArray;
-        //return entire array
     }
 }

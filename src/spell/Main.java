@@ -20,7 +20,7 @@ public class Main {
 		//
         //Create an instance of your corrector here
         //
-//		ISpellCorrector SpellCorrector = new SpellCorrector();
+		ISpellCorrector SpellCorrector = new SpellCorrector();
 		//not sure if correct ^^^^
 
 
@@ -31,7 +31,7 @@ public class Main {
 //		    suggestion = "No similar word found";
 //		}
 //
-    	System.out.println("Suggestion is: " + suggestion);
+//    	System.out.println("Suggestion is: " + suggestion);
 
 	}
 
