@@ -6,8 +6,8 @@ import java.lang.String;
 public class Trie implements ITrie {
 
     private Node root = new Node();
-    private int wordCount;
-    private int nodeCount;
+    private int wordCount = 0;
+    private int nodeCount = 1;
 
     @Override
     public void add(String word) {
@@ -26,7 +26,12 @@ public class Trie implements ITrie {
             }
             currNode = (Node) currNode.getChildren()[index];
         }
-        wordCount++;
+        if(currNode.getValue() == 0){
+            wordCount ++;
+        }
+        currNode.incrementValue();
+
+
     }
 
     @Override
@@ -49,7 +54,6 @@ public class Trie implements ITrie {
         if(currNode.getValue() == 0 || currNode == null){
             return null;
         }
-
 
         return currNode;
     }
@@ -94,12 +98,23 @@ public class Trie implements ITrie {
                 char childLetter = (char) ('a' + i);
                 curWord.append(childLetter);
 
-                toString_Helper(child, curWord, output);  //change child to root?!?!?!
+                toString_Helper(child, curWord, output);
 
                 curWord.deleteCharAt(curWord.length() - 1);    // may not work? switched .length, used to be .size?
             }
         }
     }
+
+    /*
+    *
+    *
+    *
+    *
+    *
+    * */
+
+
+
 
     @Override
     public int hashCode() {
@@ -153,7 +168,8 @@ public class Trie implements ITrie {
             if (n2 != null) {
                 return false;
             }
-        } else if (n1 != null && n2 != null) {
+        }
+        else {
             if (n1.getValue() != n2.getValue()) {
                 return false;
             }
