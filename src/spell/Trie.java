@@ -1,7 +1,6 @@
 package spell;
 import java.lang.String;
 
-
 //Dictionary
 public class Trie implements ITrie {
 
@@ -14,7 +13,7 @@ public class Trie implements ITrie {
 
         Node currNode = root;        //create marker that starts at the root
         //make lowercase
-        word.toLowerCase();             //make everything lowercase
+        word = word.toLowerCase();             //make everything lowercase
 
         for (int i = 0; i < word.length(); i++) {  //loop through the length of the word
             char yeet = word.charAt(i);
@@ -38,7 +37,7 @@ public class Trie implements ITrie {
     public INode find(String word) {
 
         Node currNode = root;    //start at the root
-        word.toLowerCase();
+        word = word.toLowerCase();
 
         for (int i = 0; i < word.length(); i++) {
             char yeet = word.charAt(i);
@@ -49,7 +48,7 @@ public class Trie implements ITrie {
             }
             currNode = (Node) currNode.getChildren()[index];    //curr node will end up at the final node of the word
         }
-        if(currNode.getValue() == 0 || currNode == null){
+        if(currNode.getValue() == 0){
             return null;
         }
 
@@ -105,23 +104,20 @@ public class Trie implements ITrie {
 
     @Override
     public int hashCode() {
-        int index = 0;
 
-
-        for (int i = 0; i < root.getValue(); i++) {
-            if (root.getChildren() != null) {
-                index++;
+        for (int i = 0; i < 26; i++) {
+            if (root.getChildren()[i] != null) {
+                return i * wordCount * nodeCount;
             }
         }
-
+        return 0;
+    }
 
         //Combine the following values
         //1. wordCount
         //2. nodeCount
         //3. The index of each of the root node's non-null children
-        return index + wordCount + nodeCount; // SHOULD PROBABLY FIX -- high probs not correct
-    }
-
+        // SHOULD PROBABLY FIX -- high probs not correct
 
     @Override
     public boolean equals(Object o) {
@@ -168,7 +164,6 @@ public class Trie implements ITrie {
                     return false;
                 }
             }
-
         }
         return true; ///if the both trees are gone through entriely and they are the same. Then true
     }

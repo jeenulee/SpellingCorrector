@@ -22,27 +22,28 @@ public class SpellCorrector implements ISpellCorrector {
             while (scanner.hasNextLine()) {
                 fileContentBuilder.append(scanner.nextLine());
 
-                //add to trie structure (dictionary)
-                //how do i load into a trie?
-//               trie.append(fileContentBuilder);
+//               trie.append(fileContentBuilder);  ignore meeeeeee
 
                 fileContentBuilder.append(System.lineSeparator());
             }
 
             fileContent = fileContentBuilder.toString();
             scanner.close();
-            System.out.println(fileContent.toString());
+
+            System.out.println(fileContent.toString());   //delete me later
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-
-
-
     @Override
     public String suggestSimilarWord(String inputWord) {
+
+
+
+
+
 
 
 
