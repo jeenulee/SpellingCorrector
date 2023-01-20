@@ -31,13 +31,14 @@ public class SpellCorrector implements ISpellCorrector {
 
             fileContent = fileContentBuilder.toString();
             scanner.close();
+            System.out.println(fileContent.toString());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-//    MyClass object = new MyClass();
-//    System.out.println("hello.fileContent");
+
 
 
     @Override

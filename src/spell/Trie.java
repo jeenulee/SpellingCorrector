@@ -5,32 +5,31 @@ import java.lang.String;
 //Dictionary
 public class Trie implements ITrie {
 
-    private Node root = new Node();
-    private int wordCount = 0;
-    private int nodeCount = 1;
+    private Node root = new Node();    //creating node that marks the root node in trie
+    private int wordCount = 0;         //keeping track of total words in trie
+    private int nodeCount = 1;         //keeping track of node markers in trie
 
     @Override
     public void add(String word) {
 
-        Node currNode = root;
+        Node currNode = root;        //create marker that starts at the root
         //make lowercase
-        word.toLowerCase();
+        word.toLowerCase();             //make everything lowercase
 
-        for (int i = 0; i < word.length(); i++) {
+        for (int i = 0; i < word.length(); i++) {  //loop through the length of the word
             char yeet = word.charAt(i);
-            int index = yeet - 'a';
+            int index = yeet - 'a';      //creating an index to keep track of where in the word we are
 
             if (currNode.getChildren()[index] == null) {
                 currNode.getChildren()[index] = new Node();
-                nodeCount ++;
+                nodeCount ++;                               //if child node is null, then create a new node and increment nodeCount
             }
-            currNode = (Node) currNode.getChildren()[index];
+            currNode = (Node) currNode.getChildren()[index];  //this is the end of the word
         }
         if(currNode.getValue() == 0){
-            wordCount ++;
+            wordCount ++;                   //if we arrive at the end of the word, and it has a value of 0, then we know it is a unique word
         }
         currNode.incrementValue();
-
 
     }
 
@@ -38,24 +37,23 @@ public class Trie implements ITrie {
     //changed from INode
     public INode find(String word) {
 
-        Node currNode = root;
+        Node currNode = root;    //start at the root
         word.toLowerCase();
 
         for (int i = 0; i < word.length(); i++) {
             char yeet = word.charAt(i);
-            int index = yeet - 'a';
+            int index = yeet - 'a';       //loop through the entire word, create an index that keeps track of where in the word we at
 
             if (currNode.getChildren()[index] == null) {
                 return null;
             }
-            currNode = (Node) currNode.getChildren()[index];
-
+            currNode = (Node) currNode.getChildren()[index];    //curr node will end up at the final node of the word
         }
         if(currNode.getValue() == 0 || currNode == null){
             return null;
         }
 
-        return currNode;
+        return currNode;                //return where we at, which is a reference to the node that ends which implies the entire word.
     }
 
     @Override
@@ -105,33 +103,22 @@ public class Trie implements ITrie {
         }
     }
 
-    /*
-    *
-    *
-    *
-    *
-    *
-    * */
-
-
-
-
     @Override
     public int hashCode() {
         int index = 0;
+
 
         for (int i = 0; i < root.getValue(); i++) {
             if (root.getChildren() != null) {
                 index++;
             }
         }
-        //Combine the following values
 
+
+        //Combine the following values
         //1. wordCount
         //2. nodeCount
         //3. The index of each of the root node's non-null children
-
-
         return index + wordCount + nodeCount; // SHOULD PROBABLY FIX -- high probs not correct
     }
 
@@ -139,41 +126,43 @@ public class Trie implements ITrie {
     @Override
     public boolean equals(Object o) {
 
-        if (o == null) {
+        if (o == null) {     // if nothing there then false
             return false;
         }
-        if (o == this) {
+        if (o == this) {     //if it is already exactly equal, then true and save time
             return true;
         }
-        Trie dictionary = (Trie) o;
+        Trie dictionary = (Trie) o;        //creating the two trees which should be the same.
 
         if (dictionary.wordCount != this.wordCount) {
-            return false;
+            return false;                               //if the word counts are not the same, then trees are different.
         }
         if (dictionary.nodeCount != this.nodeCount) {
-            return false;
+            return false;                                  //if node counts are different, then trees are different.
         }
-        return equals_Helper(this.root, dictionary.root);
-
+        return equals_Helper(this.root, dictionary.root);  //if everything above checks out, then we can start comparing actual nodes
     }
 
-    private boolean equals_Helper(Node n1, Node n2) {
+    private boolean equals_Helper(Node n1, Node n2) {     //node n1 is first node from first tree, n2 is first node from second tree.
 
         if (n1 != null) {
-            if (n2 == null) {
-                return false;
+            if (n2 == null) {   // here we are comparing the first nodes of both of the different trees
+                return false;   // if one has somethign and the other doesn't, clearly they aren't the same, return false.
             }
         }
         if (n1 == null) {
-            if (n2 != null) {
+            if (n2 != null) {   // same as above
                 return false;
             }
         }
         else {
             if (n1.getValue() != n2.getValue()) {
-                return false;
-            }
+                return false;                   //here we are checking if the entire value of the nodes are the same, or the count
+            }                                      //if not the same then we return false again.
 
+
+            //here we are going through each of the trees simultaneuously and comparing the nodes at each respective position.
+            //if not the same then false
             for (int i = 0; i < n1.getChildren().length; i++) {
                 if (!equals_Helper((Node) n1.getChildren()[i], (Node) n2.getChildren()[i])) {
                     return false;
@@ -181,15 +170,11 @@ public class Trie implements ITrie {
             }
 
         }
-        return true;
+        return true; ///if the both trees are gone through entriely and they are the same. Then true
     }
 }
 
-            //compare n1 and n2 to see if they are the same
-                //Do n1 and n2 have the same count? If not they rae not equal, return false
-                //Do both nodes have non-null children in the exact same location of the arrays (indexes), if not false, yes continue
 
-            //recurse on the children and compare the child subtrees
 
 
 
