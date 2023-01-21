@@ -20,18 +20,18 @@ public class Main {
 		//
         //Create an instance of your corrector here
         //
-		ISpellCorrector SpellCorrector = new SpellCorrector();
+		ISpellCorrector corrector = new SpellCorrector();
 		//not sure if correct ^^^^
 
 
 		
-//		corrector.useDictionary(dictionaryFileName);
-//		String suggestion = corrector.suggestSimilarWord(inputWord);
-//		if (suggestion == null) {
-//		    suggestion = "No similar word found";
-//		}
-//
-//    	System.out.println("Suggestion is: " + suggestion);
+		corrector.useDictionary(dictionaryFileName);
+		String suggestion = corrector.suggestSimilarWord(inputWord);
+		if (suggestion == null) {
+		    suggestion = "No similar word found";
+		}
+
+    	System.out.println("Suggestion is: " + suggestion);
 
 	}
 

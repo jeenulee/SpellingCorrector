@@ -5,7 +5,8 @@ import java.lang.String;
 public class Trie implements ITrie {
 
     private Node root = new Node();    //creating node that marks the root node in trie
-    private int wordCount = 0;         //keeping track of total words in trie
+    private int wordCount = 0;//keeping track of total words in trie
+
     private int nodeCount = 1;         //keeping track of node markers in trie
 
     @Override
@@ -29,7 +30,6 @@ public class Trie implements ITrie {
             wordCount ++;                   //if we arrive at the end of the word, and it has a value of 0, then we know it is a unique word
         }
         currNode.incrementValue();
-
     }
 
     @Override
@@ -51,7 +51,6 @@ public class Trie implements ITrie {
         if(currNode.getValue() == 0){
             return null;
         }
-
         return currNode;                //return where we at, which is a reference to the node that ends which implies the entire word.
     }
 
@@ -76,9 +75,7 @@ public class Trie implements ITrie {
         toString_Helper(root, curWord, output);
 
         return output.toString();
-
     }
-
 
     private void toString_Helper(Node n, StringBuilder curWord, StringBuilder output) {
 
@@ -107,17 +104,11 @@ public class Trie implements ITrie {
 
         for (int i = 0; i < 26; i++) {
             if (root.getChildren()[i] != null) {
-                return i * wordCount * nodeCount;
+                return i * wordCount * nodeCount;  //combine wordCount, Node Count, and the ith spot of the root's non null chidlren
             }
         }
         return 0;
     }
-
-        //Combine the following values
-        //1. wordCount
-        //2. nodeCount
-        //3. The index of each of the root node's non-null children
-        // SHOULD PROBABLY FIX -- high probs not correct
 
     @Override
     public boolean equals(Object o) {
